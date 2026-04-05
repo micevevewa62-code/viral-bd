@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-
-<script type="text/javascript">
-  setTimeout(function() {
-    window.location.href = "https://t.me/khelahobe07_bot?startapp"; // আপনার লিঙ্ক দিন
-  }, 12000); // ১০ সেকেন্ড (১০,০০০ মিলিসেকেন্ড)
-</script>
-  
-
-  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Viral Video Hub - ট্রেন্ডিং ভিডিও</title>
@@ -64,7 +55,7 @@
       z-index: 0;
     }
 
-    /* Entry Overlay - সাইট লোডের আগে এড দেখানোর জন্য ওভারলে */
+    /* Loading Overlay - শুধু লোডিং, কোনো অটো এড নেই */
     .entry-overlay {
       position: fixed;
       top: 0;
@@ -449,7 +440,6 @@
       transform: translateY(-3px);
     }
 
-    /* Loading spinner inside card (video) */
     .loading-spinner {
       display: none;
       position: fixed;
@@ -495,20 +485,14 @@
       .header h1 { font-size: 24px; }
       .video-info h3 { font-size: 14px; }
     }
-
-    /* disable clicks while entry ad active */
-    .disable-interaction {
-      pointer-events: none;
-      user-select: none;
-    }
   </style>
 </head>
 <body>
 
-  <!-- Entry Overlay: লোডিং + অটো এড দেখানোর জন্য -->
+  <!-- Entry Overlay: শুধু লোডিং ইফেক্ট - কোনো অটো এড নেই -->
   <div id="entryOverlay" class="entry-overlay">
     <div class="entry-spinner"></div>
-    <div class="entry-text">🎬 ভিডিও লোড হচ্ছে, দয়া করে অপেক্ষা করুন...</div>
+    <div class="entry-text">🎬 লোড হচ্ছে, দয়া করে অপেক্ষা করুন...</div>
   </div>
 
   <div class="loading-spinner" id="loadingSpinner"></div>
@@ -559,7 +543,7 @@
 
     <!-- Video Grid -->
     <div class="video-grid">
-      <!-- Video Card 1 - ফেসবুকের ভিডিও -->
+      <!-- Video Card 1 -->
       <div class="video-card">
         <span class="trending-badge"><i class="fas fa-fire"></i> ট্রেন্ডিং #১</span>
         <div class="video-thumbnail">
@@ -575,7 +559,7 @@
         <button class="play-btn" data-url="https://omg10.com/4/9717825"><i class="fas fa-play"></i> এখনই দেখুন</button>
       </div>
 
-      <!-- Video Card 2 - ওথোই আপা -->
+      <!-- Video Card 2 -->
       <div class="video-card">
         <span class="trending-badge"><i class="fas fa-fire"></i> ট্রেন্ডিং #২</span>
         <div class="video-thumbnail">
@@ -591,7 +575,7 @@
         <button class="play-btn" data-url="https://omg10.com/4/9429975"><i class="fas fa-play"></i> এখনই দেখুন</button>
       </div>
 
-      <!-- Video Card 3 - আজকের ভাইরাল -->
+      <!-- Video Card 3 -->
       <div class="video-card">
         <span class="trending-badge"><i class="fas fa-fire"></i> ট্রেন্ডিং #৩</span>
         <div class="video-thumbnail">
@@ -607,7 +591,7 @@
         <button class="play-btn" data-url="https://omg10.com/4/9429975"><i class="fas fa-play"></i> এখনই দেখুন</button>
       </div>
 
-      <!-- Video Card 4 - সেলিব্রিটি ভিডিও -->
+      <!-- Video Card 4 -->
       <div class="video-card">
         <span class="trending-badge"><i class="fas fa-fire"></i> ট্রেন্ডিং #৪</span>
         <div class="video-thumbnail">
@@ -623,7 +607,7 @@
         <button class="play-btn" data-url="https://omg10.com/4/9446627"><i class="fas fa-play"></i> এখনই দেখুন</button>
       </div>
 
-      <!-- Video Card 5 - বাচ্চাদের ভিডিও -->
+      <!-- Video Card 5 -->
       <div class="video-card">
         <span class="trending-badge"><i class="fas fa-fire"></i> ট্রেন্ডিং #৫</span>
         <div class="video-thumbnail">
@@ -672,60 +656,16 @@
 
   <script>
     (function() {
-      // ---------- গ্লোবাল ভেরিয়েবল ----------
-      let redirectUrl = null;
+      // ========== গ্লোবাল ভেরিয়েবল ==========
       const loadingSpinner = document.getElementById('loadingSpinner');
       const mainContainer = document.getElementById('mainContainer');
       const entryOverlay = document.getElementById('entryOverlay');
-      let isEntryAdCompleted = false;   // এন্ট্রি এড শেষ হয়েছে কিনা
-      let isSiteActive = false;          // সাইট সক্রিয় হলে সব ক্লিক কাজ করবে
-
-      // ---------- Adsgram ফাংশন (কোরে) ----------
-      window.showAdsgramAd = function(url, isEntryFlow = false) {
-        const blockId = "int-25410";
-        redirectUrl = url;
-        
-        if (loadingSpinner) loadingSpinner.style.display = 'block';
-        
-        if (typeof Adsgram === 'undefined') {
-          console.log('Adsgram SDK লোড হয়নি, সরাসরি রিডাইরেক্ট');
-          if (loadingSpinner) loadingSpinner.style.display = 'none';
-          window.location.href = redirectUrl;
-          return;
-        }
-        
-        Adsgram.init({ blockId }).show()
-          .then(() => {
-            console.log('✅ Adsgram ad shown successfully');
-            localStorage.setItem('adWatched', Date.now());
-            if (loadingSpinner) loadingSpinner.style.display = 'none';
-            // এন্ট্রি ফ্লোতে এড দেখানোর পর কোন রিডাইরেক্ট না, বরং সাইট আনলক করব
-            if (isEntryFlow) {
-              // এন্ট্রি এড শেষ: সাইট সক্রিয় করুন
-              activateSiteContent();
-            } else {
-              // সাধারণ ভিডিও/বাটন ক্লিক: রিডাইরেক্ট
-              window.location.href = redirectUrl;
-            }
-          })
-          .catch(error => {
-            console.log('❌ Adsgram ad error:', error);
-            if (loadingSpinner) loadingSpinner.style.display = 'none';
-            if (isEntryFlow) {
-              // এরর হলেও সাইট সক্রিয় করা ভালো, যাতে ব্যবহারকারী আটকে না থাকে
-              activateSiteContent();
-            } else {
-              window.location.href = redirectUrl;
-            }
-          });
-      };
-
-      // সাইট কন্টেন্ট আনলক + ওভারলে সরান
+      
+      // ========== অটো এড সম্পূর্ণ বন্ধ - পেজ লোডে কোনো এড দেখাবে না ==========
+      // শুধু কন্টেন্ট লোড হবে, ওভারলে সরিয়ে দিয়ে সাইট দেখানো হবে
+      
+      // সাইট কন্টেন্ট আনলক + ওভারলে সরান (কোনো এড ছাড়া)
       function activateSiteContent() {
-        if (isSiteActive) return;
-        isSiteActive = true;
-        isEntryAdCompleted = true;
-        
         // ওভারলে fadeout এবং সরানো
         if (entryOverlay) {
           entryOverlay.style.opacity = '0';
@@ -735,151 +675,109 @@
         }
         // mainContainer visible করে দেওয়া
         mainContainer.classList.add('content-visible');
-        // শরীর থেকে ক্লিক ব্লক রিমুভ
-        document.body.classList.remove('disable-interaction');
       }
-
-      // ইউজার প্রবেশের সাথে সাথে অটো এড ট্রিগার (শুধু একবার)
-      function triggerEntryAd() {
-        // যদি আগে থেকে কখনও এড ওয়াচ করা থাকে (localStorage) তাহলে সরাসরি সক্রিয় করতে পারি, কিন্তু নির্দেশ অনুযায়ী প্রবেশের সাথে সাথেই এড দেখাতে হবে
-        // তবে এক্সপেরিয়েন্স ভালো রাখতে প্রতি সেশনে এড দেখানো হবে (পেজ রিফ্রেশ বা নতুন ভিজিট) 
-        // এখানে permanent storage চেক না করলেও চলে, কারণ প্রতিবার এন্ট্রিতে এড দরকার।
-        // কিন্তু বাটন ক্লিক সিস্টেম আগের মতো থাকবে।
+      
+      // ========== Adsgram ফাংশন (শুধু ক্লিকে এড দেখানোর জন্য) ==========
+      window.showAdsgramAd = function(url) {
+        const blockId = "int-25410";
         
-        // Check if adsgram ready & show ad for entry
-        if (typeof Adsgram !== 'undefined') {
-          // এন্ট্রি এডের জন্য একটি ডামি url দরকার না, কিন্তু showAdsgramAd ফাংশন এ url লাগে। আমরা এখানে এক্সট্রা প্যারামিটার দিয়ে call করব যাতে শেষে রিডাইরেক্ট না হয়।
-          // তাই একটি ফাঁকা url বা "#" ব্যবহার করতে পারি কিন্তু সেটা redirect না করে activate করব।
-          // ইউজারকে কোনো রিডাইরেক্ট না করেই শুধু এড দেখাবে এবং আনলক করবে।
-          redirectUrl = "#"; // ডামি, redirect না happening cause isEntryFlow true
-          const blockId = "int-25410";
-          if (loadingSpinner) loadingSpinner.style.display = 'block';
-          
-          Adsgram.init({ blockId }).show()
-            .then(() => {
-              console.log('✅ Entry ad completed successfully');
-              localStorage.setItem('adWatched', Date.now());
-              if (loadingSpinner) loadingSpinner.style.display = 'none';
-              activateSiteContent();
-            })
-            .catch(error => {
-              console.log('❌ Entry ad error, still activating site:', error);
-              if (loadingSpinner) loadingSpinner.style.display = 'none';
-              // ত্রুটি থাকলেও সাইট লোড করে দেব যাতে ব্যবহারকারী সমস্যায় না পড়ে
-              activateSiteContent();
-            });
-        } else {
-          // Adsgram লোড হয়নি, কিছুক্ষণ পর চেষ্টা বা সরাসরি সক্রিয়
-          console.warn('Adsgram not ready yet, retry after delay');
-          setTimeout(() => {
-            if (typeof Adsgram !== 'undefined' && !isSiteActive) {
-              triggerEntryAd();
-            } else if (!isSiteActive) {
-              // সর্বশেষ চেষ্টা: সরাসরি সক্রিয়
-              activateSiteContent();
-            }
-          }, 1500);
+        if (loadingSpinner) loadingSpinner.style.display = 'block';
+        
+        if (typeof Adsgram === 'undefined') {
+          console.log('Adsgram SDK লোড হয়নি, সরাসরি রিডাইরেক্ট');
+          if (loadingSpinner) loadingSpinner.style.display = 'none';
+          window.location.href = url;
+          return;
         }
-      }
-
-      // সাইটের সব ইন্টারঅ্যাক্টিভ বাটনের জন্য হ্যান্ডলার (যাতে ক্লিক করলে এড দেখায়)
+        
+        Adsgram.init({ blockId }).show()
+          .then(() => {
+            console.log('✅ Adsgram ad shown successfully');
+            if (loadingSpinner) loadingSpinner.style.display = 'none';
+            // এড শেষ হলে ইউজারকে গন্তব্যে পাঠান
+            window.location.href = url;
+          })
+          .catch(error => {
+            console.log('❌ Adsgram ad error:', error);
+            if (loadingSpinner) loadingSpinner.style.display = 'none';
+            // এরর হলেও রিডাইরেক্ট
+            window.location.href = url;
+          });
+      };
+      
+      // ভিডিও ক্লিক হ্যান্ডলার
+      window.handleVideoClick = function(url) {
+        showAdsgramAd(url);
+      };
+      
+      // সাইটের সব ইন্টারঅ্যাক্টিভ বাটনের জন্য হ্যান্ডলার
       function attachGlobalClickHandlers() {
         // সব play-btn, website-btn, featured-btn যাদের data-url আছে তাদের জন্য
         const clickableElements = document.querySelectorAll('.play-btn, .website-btn, .featured-btn');
         clickableElements.forEach(btn => {
-          // নতুন হ্যান্ডলার যুক্ত করার আগে পুরাতন ইভেন্ট রিমুভ না করে নতুন যোগ করলে ডুপ্লিকেট হতে পারে, কিন্তু আমরা একবার রান করব।
-          // প্রতিরোধ করতে removeEventListener দরকার কিন্তু কাস্টম ফাংশন রেফারেন্স সংরক্ষণ করা ভাল। তবে simple পদ্ধতিতে নতুন onclick ওভাররাইট করি।
-          // তবে আগে inline onclick ছিল সেগুলো replace করি
           const targetUrl = btn.getAttribute('data-url');
           if (targetUrl) {
-            // নতুন ক্লিক লজিক
+            // নতুন ক্লিক লজিক - পুরনো ইভেন্ট ওভাররাইট
             btn.onclick = function(e) {
               e.preventDefault();
-              if (!isSiteActive) {
-                // যদি এখনও এন্ট্রি এড শেষ না হয়, তাহলে বার্তা দেখানো যেতে পারে তবে এন্ট্রি এড চলমান থাকবে ওভারলে। সেক্ষেত্রে ক্লিক ডিসএবল থাকবে।
-                // ওভারলে থাকায় বাটনে ক্লিক না করাই ভালো, কিন্তু যদি somehow ক্লিক হয় তাহলে এড দেখাবেন না, শুধু নোটিশ
-                alert("দয়া করে প্রথমে এড দেখুন, সাইট খুলতে ১টি এড দেখানো প্রয়োজন।");
-                return;
-              }
-              // সাধারণ ফ্লো: এড দেখাবে, তারপর রিডাইরেক্ট
-              handleVideoClick(targetUrl);
+              e.stopPropagation();
+              showAdsgramAd(targetUrl);
             };
           }
         });
       }
-
-      // ভিডিও ক্লিক হ্যান্ডলার (পূর্বের মতো)
-      window.handleVideoClick = function(url) {
-        if (!isSiteActive) {
-          alert("সাইট একটিভ না, এড শেষ হোক।");
-          return;
-        }
-        showAdsgramAd(url, false);
-      };
-
-      // ক্যাটাগরি ক্লিক এনিমেশন (নিষ্ক্রিয় না থাকলেও চলে)
+      
+      // ক্যাটাগরি ক্লিক এনিমেশন
       function initCategoryEvents() {
         document.querySelectorAll('.category-tag').forEach(tag => {
           tag.addEventListener('click', function() {
-            if (!isSiteActive) return;
             document.querySelector('.category-tag.active')?.classList.remove('active');
             this.classList.add('active');
           });
         });
       }
-
-      // user clicks tracking optional
+      
+      // ইউজার ট্র্যাকিং (অপশনাল)
       function initUserTracking() {
         let userClicks = 0;
         document.querySelectorAll('.play-btn, .website-btn, .featured-btn').forEach(btn => {
           btn.addEventListener('click', function() {
-            if (!isSiteActive) return;
             userClicks++;
             if (userClicks >= 3) console.log('পাওয়ার ইউজার ডিটেক্টেড!');
           });
         });
       }
-
-      // প্রাথমিক অবস্থায় সাইট কন্টেন্ট লুকান, ইন্টারঅ্যাকশন ডিসএবল
-      function initialSetup() {
-        mainContainer.classList.remove('content-visible');
-        document.body.classList.add('disable-interaction');
-        // ওভারলে দেখাবে
+      
+      // ========== পেজ লোড - কোনো অটো এড ছাড়াই সরাসরি কন্টেন্ট দেখানো ==========
+      function initializeSite() {
+        console.log('📄 পেজ লোড হয়েছে - অটো এড বন্ধ, সরাসরি কন্টেন্ট দেখানো হচ্ছে');
+        
+        // ওভারলে দেখাবে (শুধু লোডিং ইফেক্ট)
         if (entryOverlay) entryOverlay.style.display = 'flex';
-        // 2 সেকেন্ড পর বা adsgram লোড হয়ে গেলে এড ট্রিগার
-        // adsgram লোড হওয়া নিশ্চিত করতে small delay + check
-        let adsLoadedCheck = setInterval(() => {
-          if (typeof Adsgram !== 'undefined') {
-            clearInterval(adsLoadedCheck);
-            triggerEntryAd();
-          }
-        }, 300);
-        // timeout safety: 5 sec পরে যদি adsgram না লোড হয় তাহলে সাইট আনলক করে দিন
+        
+        // অল্প সময় পর ওভারলে সরিয়ে কন্টেন্ট দেখান (কোনো এড ছাড়া)
         setTimeout(() => {
-          if (!isSiteActive) {
-            clearInterval(adsLoadedCheck);
-            console.log("Safety: forcing site activation after timeout");
-            activateSiteContent();
-          }
-        }, 8000);
+          activateSiteContent();
+          console.log('✅ কন্টেন্ট দেখা যাচ্ছে (অটো এড ছাড়া)');
+        }, 800);
+        
+        // ক্লিক হ্যান্ডলার যোগ করুন
+        attachGlobalClickHandlers();
+        initCategoryEvents();
+        initUserTracking();
       }
-
-      // অতিরিক্ত: আগের script এর setTimeout গুলো সরিয়ে দিচ্ছি, কারণ দ্বন্দ্ব এড়াতে 
-      // window.location redirect script দুটি (যেগুলো page এ ছিল) আমরা সরিয়ে দিয়েছি html থেকে। (Head থেকে সরিয়ে দিয়েছি)
-      // কিন্তু যদি কোন সমস্যা হয় তাহলে রিমুভ নিশ্চিত করা হয়েছে।
       
-      // সবশেষে ইনিশিয়ালাইজ
-      initialSetup();
+      // Adsgram লোড হওয়ার জন্য অপেক্ষা না করে সরাসরি সাইট দেখান
+      // কারণ অটো এড নেই, তাই ওয়েট করার প্রয়োজন নেই
+      initializeSite();
       
-      // ডাইনামিক এলিমেন্টের জন্য attach হ্যান্ডলার একটু পরে DOM ready তে
+      // অতিরিক্ত নিরাপত্তা: DOMContentLoaded-এ আবার হ্যান্ডলার নিশ্চিত করুন
       window.addEventListener('DOMContentLoaded', () => {
         attachGlobalClickHandlers();
         initCategoryEvents();
         initUserTracking();
-        // যদি সাইট আগেই active হয়ে যায় তবে ক্লিক সক্ষম হবে
       });
       
-      // MutationObserver যাতে future dynamic elements থাকলে handle করতে, কিন্তু বর্তমান html static
     })();
   </script>
 </body>
