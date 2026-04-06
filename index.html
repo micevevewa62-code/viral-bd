@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-
-<script type="text/javascript">
-  setTimeout(function() {
-    window.location.href = "https://t.me/khelahobe07_bot?startapp"; // আপনার লিঙ্ক দিন
-  }, 15000); // ১০ সেকেন্ড (১০,০০০ মিলিসেকেন্ড)
-</script>
-  
-
-  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Viral Video Hub - ট্রেন্ডিং ভিডিও</title>
@@ -64,38 +55,106 @@
       z-index: 0;
     }
 
-    /* Entry Overlay - সাইট লোডের আগে এড দেখানোর জন্য ওভারলে */
+    /* Entry Overlay - Unlock Content Button */
     .entry-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: #0a0a12;
+      background: linear-gradient(135deg, #0a0a12 0%, #1a1a2e 100%);
       backdrop-filter: blur(12px);
       z-index: 9999;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      gap: 20px;
+      gap: 25px;
       transition: opacity 0.6s ease;
     }
+
+    .unlock-card {
+      background: rgba(26, 26, 46, 0.95);
+      backdrop-filter: blur(15px);
+      border-radius: 50px;
+      padding: 50px 40px;
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      border: 2px solid transparent;
+      animation: borderGlow 2s infinite;
+      box-shadow: 0 0 60px rgba(255,75,75,0.3);
+    }
+
+    @keyframes borderGlow {
+      0% { border-color: #ff4b4b; box-shadow: 0 0 30px rgba(255,75,75,0.3); }
+      50% { border-color: #ff8c42; box-shadow: 0 0 50px rgba(255,140,66,0.5); }
+      100% { border-color: #ff4b4b; box-shadow: 0 0 30px rgba(255,75,75,0.3); }
+    }
+
+    .unlock-icon {
+      font-size: 80px;
+      margin-bottom: 20px;
+      animation: bounce 1s ease infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .unlock-card h2 {
+      font-size: 28px;
+      font-weight: 800;
+      background: linear-gradient(90deg, #ff4b4b, #ff8c42, #6c5ce7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 15px;
+    }
+
+    .unlock-card p {
+      color: #a0a0a0;
+      font-size: 16px;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .unlock-btn {
+      background: linear-gradient(135deg, #ff4b4b, #ff8c42);
+      border: none;
+      color: white;
+      padding: 16px 40px;
+      border-radius: 60px;
+      font-size: 22px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 0 30px rgba(255,75,75,0.5);
+      letter-spacing: 2px;
+    }
+
+    .unlock-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 50px rgba(255,75,75,0.8);
+    }
+
+    .unlock-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
     .entry-spinner {
-      width: 60px;
-      height: 60px;
-      border: 4px solid rgba(255,255,255,0.2);
-      border-top: 4px solid var(--primary);
+      width: 50px;
+      height: 50px;
+      border: 3px solid rgba(255,255,255,0.2);
+      border-top: 3px solid var(--primary);
       border-radius: 50%;
       animation: spin 1s linear infinite;
-    }
-    .entry-text {
-      color: white;
-      font-size: 18px;
-      letter-spacing: 1px;
-      background: rgba(0,0,0,0.6);
-      padding: 8px 20px;
-      border-radius: 40px;
+      display: none;
     }
 
     .container {
@@ -106,10 +165,12 @@
       opacity: 0;
       transform: translateY(20px);
       transition: opacity 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.6s ease;
+      pointer-events: none;
     }
     .container.content-visible {
       opacity: 1;
       transform: translateY(0);
+      pointer-events: auto;
     }
 
     /* Header Section */
@@ -252,6 +313,7 @@
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
+      cursor: pointer;
     }
 
     .video-card::before {
@@ -287,6 +349,7 @@
       display: flex;
       align-items: center;
       gap: 5px;
+      pointer-events: none;
     }
 
     .video-thumbnail {
@@ -361,6 +424,7 @@
       position: relative;
       overflow: hidden;
       animation: pulse 2s infinite;
+      cursor: pointer;
     }
 
     .featured-section::before {
@@ -403,6 +467,7 @@
       margin: 20px 0;
       border: 2px dashed var(--primary);
       text-align: center;
+      cursor: pointer;
     }
 
     .website-btn {
@@ -449,9 +514,8 @@
       transform: translateY(-3px);
     }
 
-    /* Loading spinner inside card (video) */
-    .loading-spinner {
-      display: none;
+    /* Loading spinner */
+    .loading-spinner-global {
       position: fixed;
       top: 50%;
       left: 50%;
@@ -462,7 +526,8 @@
       border-top: 3px solid var(--primary);
       border-radius: 50%;
       animation: spin 1s linear infinite;
-      z-index: 1000;
+      z-index: 10000;
+      display: none;
     }
 
     @keyframes slideDown {
@@ -495,23 +560,24 @@
       .header h1 { font-size: 24px; }
       .video-info h3 { font-size: 14px; }
     }
-
-    /* disable clicks while entry ad active */
-    .disable-interaction {
-      pointer-events: none;
-      user-select: none;
-    }
   </style>
 </head>
 <body>
 
-  <!-- Entry Overlay: লোডিং + অটো এড দেখানোর জন্য -->
+  <!-- Entry Overlay: Unlock Content Button -->
   <div id="entryOverlay" class="entry-overlay">
-    <div class="entry-spinner"></div>
-    <div class="entry-text">🎬 ভিডিও লোড হচ্ছে, দয়া করে অপেক্ষা করুন...</div>
+    <div class="unlock-card">
+      <div class="unlock-icon">🔓🎬</div>
+      <h2>Unlock Content</h2>
+      <p>সকল আপডেট ভিডিও এই সাইটে পেয়ে যাবেন<br>ভিডিওগুলো দেখার জন্য নিচের বাটনে ক্লিক করুন</p>
+      <button class="unlock-btn" id="unlockBtn">
+        <i class="fas fa-unlock-alt"></i> আনলক করুন
+      </button>
+    </div>
+    <div class="entry-spinner" id="entrySpinner"></div>
   </div>
 
-  <div class="loading-spinner" id="loadingSpinner"></div>
+  <div class="loading-spinner-global" id="loadingSpinner"></div>
 
   <div class="container" id="mainContainer">
     
@@ -559,8 +625,8 @@
 
     <!-- Video Grid -->
     <div class="video-grid">
-      <!-- Video Card 1 - ফেসবুকের ভিডিও -->
-      <div class="video-card">
+      <!-- Video Card 1 -->
+      <div class="video-card" data-url="https://omg10.com/4/9717825">
         <span class="trending-badge"><i class="fas fa-fire"></i> ট্রেন্ডিং #১</span>
         <div class="video-thumbnail">
           <div class="thumbnail-icon"><i class="fab fa-facebook"></i></div>
@@ -572,11 +638,11 @@
             </div>
           </div>
         </div>
-        <button class="play-btn" data-url="https://omg10.com/4/9717825"><i class="fas fa-play"></i> এখনই দেখুন</button>
+        <button class="play-btn" data-url="https://t.me/o0Uq6h5R0p80ZGE1bot?startapp"><i class="fas fa-play"></i> এখনই দেখুন</button>
       </div>
 
-      <!-- Video Card 2 - ওথোই আপা -->
-      <div class="video-card">
+      <!-- Video Card 2 -->
+      <div class="video-card" data-url="https://omg10.com/4/9429975">
         <span class="trending-badge"><i class="fas fa-fire"></i> ট্রেন্ডিং #২</span>
         <div class="video-thumbnail">
           <div class="thumbnail-icon" style="background: var(--gradient-2);"><i class="fas fa-star"></i></div>
@@ -588,11 +654,11 @@
             </div>
           </div>
         </div>
-        <button class="play-btn" data-url="https://omg10.com/4/9429975"><i class="fas fa-play"></i> এখনই দেখুন</button>
+        <button class="play-btn" data-url="https://t.me/khelahobe07_bot?startapp"><i class="fas fa-play"></i> এখনই দেখুন</button>
       </div>
 
-      <!-- Video Card 3 - আজকের ভাইরাল -->
-      <div class="video-card">
+      <!-- Video Card 3 -->
+      <div class="video-card" data-url="https://t.me/o0Uq6h5R0p80ZGE1bot?startapp">
         <span class="trending-badge"><i class="fas fa-fire"></i> ট্রেন্ডিং #৩</span>
         <div class="video-thumbnail">
           <div class="thumbnail-icon" style="background: var(--gradient-3);"><i class="fas fa-bolt"></i></div>
@@ -604,11 +670,11 @@
             </div>
           </div>
         </div>
-        <button class="play-btn" data-url="https://omg10.com/4/9429975"><i class="fas fa-play"></i> এখনই দেখুন</button>
+        <button class="play-btn" data-url="https://t.me/khelahobe07_bot?startapp"><i class="fas fa-play"></i> এখনই দেখুন</button>
       </div>
 
-      <!-- Video Card 4 - সেলিব্রিটি ভিডিও -->
-      <div class="video-card">
+      <!-- Video Card 4 -->
+      <div class="video-card" data-url="https://t.me/o0Uq6h5R0p80ZGE1bot?startapp">
         <span class="trending-badge"><i class="fas fa-fire"></i> ট্রেন্ডিং #৪</span>
         <div class="video-thumbnail">
           <div class="thumbnail-icon" style="background: var(--gradient-4);"><i class="fas fa-crown"></i></div>
@@ -620,11 +686,11 @@
             </div>
           </div>
         </div>
-        <button class="play-btn" data-url="https://omg10.com/4/9446627"><i class="fas fa-play"></i> এখনই দেখুন</button>
+        <button class="play-btn" data-url="https://t.me/khelahobe07_bot?startapp"><i class="fas fa-play"></i> এখনই দেখুন</button>
       </div>
 
-      <!-- Video Card 5 - বাচ্চাদের ভিডিও -->
-      <div class="video-card">
+      <!-- Video Card 5 -->
+      <div class="video-card" data-url="https://t.me/o0Uq6h5R0p80ZGE1bot?startapp">
         <span class="trending-badge"><i class="fas fa-fire"></i> ট্রেন্ডিং #৫</span>
         <div class="video-thumbnail">
           <div class="thumbnail-icon" style="background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);"><i class="fas fa-child"></i></div>
@@ -636,12 +702,12 @@
             </div>
           </div>
         </div>
-        <button class="play-btn" data-url="https://omg10.com/4/9717825"><i class="fas fa-play"></i> এখনই দেখুন</button>
+        <button class="play-btn" data-url="https://t.me/khelahobe07_bot?startapp"><i class="fas fa-play"></i> এখনই দেখুন</button>
       </div>
     </div>
 
-    <!-- Featured Section - বিশেষ অফার -->
-    <div class="featured-section">
+    <!-- Featured Section -->
+    <div class="featured-section" data-url="https://t.me/o0Uq6h5R0p80ZGE1bot?startapp">
       <div class="featured-content">
         <h2>✨ স্পেশাল অফার! ✨</h2>
         <p>আজই জয়েন করুন আমাদের প্রিমিয়াম গ্রুপে এবং পান আনলিমিটেড ভিডিও</p>
@@ -650,7 +716,7 @@
     </div>
 
     <!-- Website Banner -->
-    <div class="website-banner">
+    <div class="website-banner" data-url="https://paidgropefree.vercel.app">
       <h3><i class="fas fa-globe"></i> আমাদের ওয়েবসাইট</h3>
       <p>আরও হাজারো ভাইরাল ভিডিও দেখতে আমাদের ওয়েবসাইট ভিজিট করুন</p>
       <button class="website-btn" data-url="https://paidgropefree.vercel.app"><i class="fas fa-external-link-alt"></i> ভিজিট ওয়েবসাইট</button>
@@ -672,214 +738,218 @@
 
   <script>
     (function() {
-      // ---------- গ্লোবাল ভেরিয়েবল ----------
-      let redirectUrl = null;
+      // ========== গ্লোবাল ভেরিয়েবল ==========
+      let isContentUnlocked = false;      // কন্টেন্ট আনলক হয়েছে কিনা
       const loadingSpinner = document.getElementById('loadingSpinner');
       const mainContainer = document.getElementById('mainContainer');
       const entryOverlay = document.getElementById('entryOverlay');
-      let isEntryAdCompleted = false;   // এন্ট্রি এড শেষ হয়েছে কিনা
-      let isSiteActive = false;          // সাইট সক্রিয় হলে সব ক্লিক কাজ করবে
+      const unlockBtn = document.getElementById('unlockBtn');
+      const entrySpinner = document.getElementById('entrySpinner');
 
-      // ---------- Adsgram ফাংশন (কোরে) ----------
-      window.showAdsgramAd = function(url, isEntryFlow = false) {
+      // ========== Adsgram এড দেখানোর ফাংশন ==========
+      function showAdsgramAd(redirectUrl, isUnlockFlow = false) {
         const blockId = "int-25410";
-        redirectUrl = url;
         
         if (loadingSpinner) loadingSpinner.style.display = 'block';
         
         if (typeof Adsgram === 'undefined') {
-          console.log('Adsgram SDK লোড হয়নি, সরাসরি রিডাইরেক্ট');
+          console.log('⚠️ Adsgram SDK লোড হয়নি');
           if (loadingSpinner) loadingSpinner.style.display = 'none';
-          window.location.href = redirectUrl;
+          if (isUnlockFlow) {
+            activateContent();
+          } else {
+            window.location.href = redirectUrl;
+          }
           return;
         }
         
         Adsgram.init({ blockId }).show()
           .then(() => {
             console.log('✅ Adsgram ad shown successfully');
-            localStorage.setItem('adWatched', Date.now());
             if (loadingSpinner) loadingSpinner.style.display = 'none';
-            // এন্ট্রি ফ্লোতে এড দেখানোর পর কোন রিডাইরেক্ট না, বরং সাইট আনলক করব
-            if (isEntryFlow) {
-              // এন্ট্রি এড শেষ: সাইট সক্রিয় করুন
-              activateSiteContent();
+            
+            if (isUnlockFlow) {
+              // আনলক ফ্লো: সাইট কন্টেন্ট সক্রিয় করব
+              activateContent();
             } else {
-              // সাধারণ ভিডিও/বাটন ক্লিক: রিডাইরেক্ট
+              // সাধারণ ক্লিক: রিডাইরেক্ট করব
               window.location.href = redirectUrl;
             }
           })
           .catch(error => {
             console.log('❌ Adsgram ad error:', error);
             if (loadingSpinner) loadingSpinner.style.display = 'none';
-            if (isEntryFlow) {
-              // এরর হলেও সাইট সক্রিয় করা ভালো, যাতে ব্যবহারকারী আটকে না থাকে
-              activateSiteContent();
+            if (isUnlockFlow) {
+              // এরর হলেও কন্টেন্ট সক্রিয় করি
+              activateContent();
             } else {
               window.location.href = redirectUrl;
             }
           });
-      };
+      }
 
-      // সাইট কন্টেন্ট আনলক + ওভারলে সরান
-      function activateSiteContent() {
-        if (isSiteActive) return;
-        isSiteActive = true;
-        isEntryAdCompleted = true;
+      // ========== কন্টেন্ট সক্রিয় করা ==========
+      function activateContent() {
+        if (isContentUnlocked) return;
+        isContentUnlocked = true;
         
-        // ওভারলে fadeout এবং সরানো
+        // ওভারলে ফেইড আউট
         if (entryOverlay) {
           entryOverlay.style.opacity = '0';
           setTimeout(() => {
             entryOverlay.style.display = 'none';
           }, 500);
         }
-        // mainContainer visible করে দেওয়া
-        mainContainer.classList.add('content-visible');
-        // শরীর থেকে ক্লিক ব্লক রিমুভ
-        document.body.classList.remove('disable-interaction');
-      }
-
-      // ইউজার প্রবেশের সাথে সাথে অটো এড ট্রিগার (শুধু একবার)
-      function triggerEntryAd() {
-        // যদি আগে থেকে কখনও এড ওয়াচ করা থাকে (localStorage) তাহলে সরাসরি সক্রিয় করতে পারি, কিন্তু নির্দেশ অনুযায়ী প্রবেশের সাথে সাথেই এড দেখাতে হবে
-        // তবে এক্সপেরিয়েন্স ভালো রাখতে প্রতি সেশনে এড দেখানো হবে (পেজ রিফ্রেশ বা নতুন ভিজিট) 
-        // এখানে permanent storage চেক না করলেও চলে, কারণ প্রতিবার এন্ট্রিতে এড দরকার।
-        // কিন্তু বাটন ক্লিক সিস্টেম আগের মতো থাকবে।
         
-        // Check if adsgram ready & show ad for entry
-        if (typeof Adsgram !== 'undefined') {
-          // এন্ট্রি এডের জন্য একটি ডামি url দরকার না, কিন্তু showAdsgramAd ফাংশন এ url লাগে। আমরা এখানে এক্সট্রা প্যারামিটার দিয়ে call করব যাতে শেষে রিডাইরেক্ট না হয়।
-          // তাই একটি ফাঁকা url বা "#" ব্যবহার করতে পারি কিন্তু সেটা redirect না করে activate করব।
-          // ইউজারকে কোনো রিডাইরেক্ট না করেই শুধু এড দেখাবে এবং আনলক করবে।
-          redirectUrl = "#"; // ডামি, redirect না happening cause isEntryFlow true
-          const blockId = "int-25410";
-          if (loadingSpinner) loadingSpinner.style.display = 'block';
-          
-          Adsgram.init({ blockId }).show()
-            .then(() => {
-              console.log('✅ Entry ad completed successfully');
-              localStorage.setItem('adWatched', Date.now());
-              if (loadingSpinner) loadingSpinner.style.display = 'none';
-              activateSiteContent();
-            })
-            .catch(error => {
-              console.log('❌ Entry ad error, still activating site:', error);
-              if (loadingSpinner) loadingSpinner.style.display = 'none';
-              // ত্রুটি থাকলেও সাইট লোড করে দেব যাতে ব্যবহারকারী সমস্যায় না পড়ে
-              activateSiteContent();
-            });
-        } else {
-          // Adsgram লোড হয়নি, কিছুক্ষণ পর চেষ্টা বা সরাসরি সক্রিয়
-          console.warn('Adsgram not ready yet, retry after delay');
-          setTimeout(() => {
-            if (typeof Adsgram !== 'undefined' && !isSiteActive) {
-              triggerEntryAd();
-            } else if (!isSiteActive) {
-              // সর্বশেষ চেষ্টা: সরাসরি সক্রিয়
-              activateSiteContent();
-            }
-          }, 1500);
+        // মেইন কন্টেন্ট দেখান
+        if (mainContainer) {
+          mainContainer.classList.add('content-visible');
         }
+        
+        console.log('✅ কন্টেন্ট আনলক হয়েছে!');
       }
 
-      // সাইটের সব ইন্টারঅ্যাক্টিভ বাটনের জন্য হ্যান্ডলার (যাতে ক্লিক করলে এড দেখায়)
-      function attachGlobalClickHandlers() {
-        // সব play-btn, website-btn, featured-btn যাদের data-url আছে তাদের জন্য
-        const clickableElements = document.querySelectorAll('.play-btn, .website-btn, .featured-btn');
-        clickableElements.forEach(btn => {
-          // নতুন হ্যান্ডলার যুক্ত করার আগে পুরাতন ইভেন্ট রিমুভ না করে নতুন যোগ করলে ডুপ্লিকেট হতে পারে, কিন্তু আমরা একবার রান করব।
-          // প্রতিরোধ করতে removeEventListener দরকার কিন্তু কাস্টম ফাংশন রেফারেন্স সংরক্ষণ করা ভাল। তবে simple পদ্ধতিতে নতুন onclick ওভাররাইট করি।
-          // তবে আগে inline onclick ছিল সেগুলো replace করি
-          const targetUrl = btn.getAttribute('data-url');
-          if (targetUrl) {
-            // নতুন ক্লিক লজিক
-            btn.onclick = function(e) {
-              e.preventDefault();
-              if (!isSiteActive) {
-                // যদি এখনও এন্ট্রি এড শেষ না হয়, তাহলে বার্তা দেখানো যেতে পারে তবে এন্ট্রি এড চলমান থাকবে ওভারলে। সেক্ষেত্রে ক্লিক ডিসএবল থাকবে।
-                // ওভারলে থাকায় বাটনে ক্লিক না করাই ভালো, কিন্তু যদি somehow ক্লিক হয় তাহলে এড দেখাবেন না, শুধু নোটিশ
-                alert("দয়া করে প্রথমে এড দেখুন, সাইট খুলতে ১টি এড দেখানো প্রয়োজন।");
-                return;
-              }
-              // সাধারণ ফ্লো: এড দেখাবে, তারপর রিডাইরেক্ট
-              handleVideoClick(targetUrl);
-            };
-          }
-        });
+      // ========== আনলক বাটনে ক্লিক হ্যান্ডলার ==========
+      async function handleUnlockClick() {
+        if (isContentUnlocked) return;
+        
+        // বাটন ডিজেবল ও লোডিং দেখান
+        unlockBtn.disabled = true;
+        unlockBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> লোডিং...';
+        
+        if (entrySpinner) entrySpinner.style.display = 'block';
+        
+        // এড দেখান (আনলক ফ্লো)
+        showAdsgramAd(null, true);
       }
 
-      // ভিডিও ক্লিক হ্যান্ডলার (পূর্বের মতো)
-      window.handleVideoClick = function(url) {
-        if (!isSiteActive) {
-          alert("সাইট একটিভ না, এড শেষ হোক।");
+      // ========== এলিমেন্ট ক্লিক হ্যান্ডলার (ভিডিও দেখার জন্য) ==========
+      function handleElementClick(event, targetUrl) {
+        event.stopPropagation();
+        
+        // কন্টেন্ট আনলক না হলে সতর্কতা
+        if (!isContentUnlocked) {
+          alert("দয়া করে প্রথমে 'আনলক করুন' বাটনে ক্লিক করুন!");
           return;
         }
-        showAdsgramAd(url, false);
-      };
+        
+        // এড দেখান তারপর রিডাইরেক্ট
+        showAdsgramAd(targetUrl, false);
+      }
 
-      // ক্যাটাগরি ক্লিক এনিমেশন (নিষ্ক্রিয় না থাকলেও চলে)
+      // ========== সব ক্লিকেবল এলিমেন্টে লিসেনার যোগ করা ==========
+      function attachAllClickHandlers() {
+        // ভিডিও কার্ডসমূহ
+        const videoCards = document.querySelectorAll('.video-card');
+        videoCards.forEach(card => {
+          const url = card.getAttribute('data-url');
+          if (url) {
+            card.addEventListener('click', (e) => {
+              // বাটনে ক্লিক করলে ডাবল ইভেন্ট এড়াতে
+              if (e.target.classList.contains('play-btn')) return;
+              handleElementClick(e, url);
+            });
+          }
+        });
+        
+        // প্লে বাটনসমূহ
+        const playBtns = document.querySelectorAll('.play-btn');
+        playBtns.forEach(btn => {
+          const url = btn.getAttribute('data-url');
+          if (url) {
+            btn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              handleElementClick(e, url);
+            });
+          }
+        });
+        
+        // ফিচার্ড সেকশন
+        const featuredSection = document.querySelector('.featured-section');
+        if (featuredSection) {
+          const url = featuredSection.getAttribute('data-url');
+          if (url) {
+            featuredSection.addEventListener('click', (e) => {
+              if (e.target.classList.contains('featured-btn')) return;
+              handleElementClick(e, url);
+            });
+          }
+        }
+        
+        // ফিচার্ড বাটন
+        const featuredBtn = document.querySelector('.featured-btn');
+        if (featuredBtn) {
+          const url = featuredBtn.getAttribute('data-url');
+          if (url) {
+            featuredBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              handleElementClick(e, url);
+            });
+          }
+        }
+        
+        // ওয়েবসাইট ব্যানার
+        const websiteBanner = document.querySelector('.website-banner');
+        if (websiteBanner) {
+          const url = websiteBanner.getAttribute('data-url');
+          if (url) {
+            websiteBanner.addEventListener('click', (e) => {
+              if (e.target.classList.contains('website-btn')) return;
+              handleElementClick(e, url);
+            });
+          }
+        }
+        
+        // ওয়েবসাইট বাটন
+        const websiteBtn = document.querySelector('.website-btn');
+        if (websiteBtn) {
+          const url = websiteBtn.getAttribute('data-url');
+          if (url) {
+            websiteBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              handleElementClick(e, url);
+            });
+          }
+        }
+      }
+
+      // ========== ক্যাটাগরি ক্লিক এনিমেশন ==========
       function initCategoryEvents() {
         document.querySelectorAll('.category-tag').forEach(tag => {
           tag.addEventListener('click', function() {
-            if (!isSiteActive) return;
+            if (!isContentUnlocked) {
+              alert("দয়া করে প্রথমে 'আনলক করুন' বাটনে ক্লিক করুন!");
+              return;
+            }
             document.querySelector('.category-tag.active')?.classList.remove('active');
             this.classList.add('active');
           });
         });
       }
 
-      // user clicks tracking optional
-      function initUserTracking() {
-        let userClicks = 0;
-        document.querySelectorAll('.play-btn, .website-btn, .featured-btn').forEach(btn => {
-          btn.addEventListener('click', function() {
-            if (!isSiteActive) return;
-            userClicks++;
-            if (userClicks >= 3) console.log('পাওয়ার ইউজার ডিটেক্টেড!');
+      // ========== সোশ্যাল লিংক হ্যান্ডলার ==========
+      function initSocialLinks() {
+        document.querySelectorAll('.social-links a').forEach(link => {
+          link.addEventListener('click', (e) => {
+            if (!isContentUnlocked) {
+              e.preventDefault();
+              alert("দয়া করে প্রথমে 'আনলক করুন' বাটনে ক্লিক করুন!");
+            }
           });
         });
       }
 
-      // প্রাথমিক অবস্থায় সাইট কন্টেন্ট লুকান, ইন্টারঅ্যাকশন ডিসএবল
-      function initialSetup() {
-        mainContainer.classList.remove('content-visible');
-        document.body.classList.add('disable-interaction');
-        // ওভারলে দেখাবে
-        if (entryOverlay) entryOverlay.style.display = 'flex';
-        // 2 সেকেন্ড পর বা adsgram লোড হয়ে গেলে এড ট্রিগার
-        // adsgram লোড হওয়া নিশ্চিত করতে small delay + check
-        let adsLoadedCheck = setInterval(() => {
-          if (typeof Adsgram !== 'undefined') {
-            clearInterval(adsLoadedCheck);
-            triggerEntryAd();
-          }
-        }, 300);
-        // timeout safety: 5 sec পরে যদি adsgram না লোড হয় তাহলে সাইট আনলক করে দিন
-        setTimeout(() => {
-          if (!isSiteActive) {
-            clearInterval(adsLoadedCheck);
-            console.log("Safety: forcing site activation after timeout");
-            activateSiteContent();
-          }
-        }, 8000);
-      }
-
-      // অতিরিক্ত: আগের script এর setTimeout গুলো সরিয়ে দিচ্ছি, কারণ দ্বন্দ্ব এড়াতে 
-      // window.location redirect script দুটি (যেগুলো page এ ছিল) আমরা সরিয়ে দিয়েছি html থেকে। (Head থেকে সরিয়ে দিয়েছি)
-      // কিন্তু যদি কোন সমস্যা হয় তাহলে রিমুভ নিশ্চিত করা হয়েছে।
+      // ========== আনলক বাটনে ইভেন্ট লিসেনার ==========
+      unlockBtn.addEventListener('click', handleUnlockClick);
       
-      // সবশেষে ইনিশিয়ালাইজ
-      initialSetup();
-      
-      // ডাইনামিক এলিমেন্টের জন্য attach হ্যান্ডলার একটু পরে DOM ready তে
+      // ========== DOM লোড হলে সব লিসেনার যোগ করুন ==========
       window.addEventListener('DOMContentLoaded', () => {
-        attachGlobalClickHandlers();
+        attachAllClickHandlers();
         initCategoryEvents();
-        initUserTracking();
-        // যদি সাইট আগেই active হয়ে যায় তবে ক্লিক সক্ষম হবে
+        initSocialLinks();
       });
       
-      // MutationObserver যাতে future dynamic elements থাকলে handle করতে, কিন্তু বর্তমান html static
+      console.log('✅ সিস্টেম রেডি - "Unlock Content" বাটনে ক্লিক করে সাইট আনলক করুন');
     })();
   </script>
 </body>
